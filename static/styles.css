@@ -1,0 +1,202 @@
+:root {
+    --bg-color: #0f1115;
+    --primary-color: #5465ff;
+    --secondary-color: #2a2d35;
+    --text-color: #e0e0e0;
+    --text-muted: #9ca3af;
+    --chat-bg: rgba(26, 29, 36, 0.8);
+    --user-message-bg: #2d3748;
+    --assistant-message-bg: #374151;
+    --input-bg: #2a2d35;
+    --input-border: #4a5568;
+}
+
+body, html {
+    height: 100%;
+    margin: 0;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+.background-design {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(circle at 10% 20%, rgba(91, 104, 235, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 90% 80%, rgba(91, 104, 235, 0.05) 0%, transparent 50%);
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    z-index: -1;
+}
+
+.app-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 20px;
+}
+
+h1 {
+    font-size: 24px;
+    margin: 0;
+}
+
+.header-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+main {
+    display: flex;
+    flex: 1;
+    gap: 20px;
+    height: calc(100% - 60px);
+}
+
+.chat-container {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--chat-bg);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+#chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+}
+
+.message {
+    max-width: 80%;
+    margin-bottom: 15px;
+    padding: 12px 16px;
+    border-radius: 12px;
+    line-height: 1.5;
+    animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.user-message {
+    align-self: flex-end;
+    background-color: var(--user-message-bg);
+    margin-left: auto;
+}
+
+.assistant-message {
+    align-self: flex-start;
+    background-color: var(--assistant-message-bg);
+}
+
+#message-form {
+    display: flex;
+    padding: 20px;
+    background-color: var(--secondary-color);
+}
+
+#message-input {
+    flex: 1;
+    padding: 12px 16px;
+    border: 1px solid var(--input-border);
+    border-radius: 8px;
+    font-size: 14px;
+    outline: none;
+    background-color: var(--input-bg);
+    color: var(--text-color);
+}
+
+#message-input:focus {
+    border-color: var(--primary-color);
+}
+
+.api-response-container {
+    flex: 1;
+    background-color: var(--secondary-color);
+    border-radius: 12px;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+button {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease, transform 0.1s ease;
+}
+
+button:hover {
+    background-color: #4a5aff;
+}
+
+button:active {
+    transform: scale(0.98);
+}
+
+.clear-button {
+    background-color: #e53e3e;
+}
+
+.clear-button:hover {
+    background-color: #c53030;
+}
+
+.tools-button {
+    background-color: var(--secondary-color);
+}
+
+.tools-button:hover {
+    background-color: #3a3f4b;
+}
+
+#api-response {
+    background-color: var(--chat-bg);
+    border-radius: 8px;
+    padding: 16px;
+    font-family: 'Fira Code', 'Courier New', Courier, monospace;
+    font-size: 13px;
+    white-space: pre-wrap;
+    word-break: break-word;
+    border: 1px solid var(--input-border);
+}
+
+#typing-indicator {
+    font-style: italic;
+    color: var(--text-muted);
+    margin-bottom: 10px;
+    font-size: 14px;
+    padding: 0 20px;
+}
+
+@media (max-width: 768px) {
+    main {
+        flex-direction: column;
+    }
+    
+    .chat-container, .api-response-container {
+        width: 100%;
+        height: 50vh;
+    }
+}

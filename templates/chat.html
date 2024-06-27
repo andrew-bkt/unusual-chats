@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Assistant Chat</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <div class="background-design"></div>
+    <div class="app-container">
+        <header>
+            <h1>AI Assistant Chat</h1>
+            <div class="header-buttons">
+                <button id="go-to-tools" class="tools-button">Tools</button>
+                <button id="clear-chat" class="clear-button">Clear Chat</button>
+            </div>
+        </header>
+        <main>
+            <div class="chat-container">
+                <div id="chat-messages"></div>
+                <div id="typing-indicator" style="display: none;">Assistant is typing...</div>
+                <form id="message-form">
+                    <input type="text" id="message-input" placeholder="Type your message..." required>
+                    <button type="submit">Send</button>
+                </form>
+            </div>
+            <div class="api-response-container">
+                <h2>API Response</h2>
+                <div id="api-response"></div>
+            </div>
+        </main>
+    </div>
+    <script src="/static/chat.js"></script>
+</body>
+</html>
