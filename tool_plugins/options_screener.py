@@ -1,12 +1,18 @@
+import os
 import requests
+import logging
 from tool_plugins.base_tool import BaseTool
 
 class OptionsScreener(BaseTool):
-    def execute(self, api_key: str, **kwargs):
+    def execute(self, kwargs):
+        api_key = os.getenv("UNUSUAL_WHALES_API_KEY")
+        if not api_key:
+            error_message = "API key is missing"
+            logging.error(error_message)
+            return {"error": error_message}
+        
         url = "https://api.unusualwhales.com/api/screener/option-contracts"
-        headers = {
-            "Authorization": f"Bearer {api_key}"
-        }
+        headers = {"Authorization": f"Bearer {api_key}"}
         
         # Filter out None values from kwargs
         params = {k: v for k, v in kwargs.items() if v is not None}
@@ -19,12 +25,6 @@ class OptionsScreener(BaseTool):
             error_message = f"Failed to fetch data: {str(e)}"
             logging.error(error_message)
             return {"error": error_message}
-
-
-        if response.status_code == 200:
-            return response.json()
-        else:
-            return {"error": f"Failed to fetch data: {response.status_code}"}
 
     def get_schema(self):
         return {

@@ -186,14 +186,44 @@ async def create_tool(name: str = Form(...), code: str = Form(...)):
         raise HTTPException(status_code=400, detail=str(e))
 
 
-
-
 @app.get("/api/response/{response_id}")
 async def get_api_response(response_id: str):
     response = api_response_manager.get_response(response_id)
     if response is None:
         raise HTTPException(status_code=404, detail="Response not found")
     return JSONResponse(content=response)
+
+
+@app.get("/dashboard", response_class=HTMLResponse)
+async def dashboard_page(request: Request):
+    return templates.TemplateResponse("dashboard.html", {"request": request})
+
+@app.post("/generate_dashboard_component")
+async def generate_component(request: Request, query: str = Form(...)):
+    try:
+        tool = tool_manager.get_tool("dashboard_component_generator")
+        if tool:
+            result = tool.execute(query=query)
+            return JSONResponse(content=json.loads(result))
+        else:
+            raise HTTPException(status_code=404, detail="Dashboard component generator tool not found")
+    except Exception as e:
+        logger.error(f"Error generating dashboard component: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/refresh_api_call")
+async def refresh_api_call(request: Request, tool_name: str = Form(...), args: str = Form(...)):
+    try:
+        tool = tool_manager.get_tool(tool_name)
+        if tool:
+            arguments = json.loads(args)
+            result = tool.execute(**arguments)
+            return JSONResponse(content=json.loads(result))
+        else:
+            raise HTTPException(status_code=404, detail="Tool not found")
+    except Exception as e:
+        logger.error(f"Error refreshing API call: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
 
 if __name__ == "__main__":
     import uvicorn

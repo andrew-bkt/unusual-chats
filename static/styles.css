@@ -236,3 +236,38 @@ button:active {
         order: 2;
     }
 }
+
+.metric {
+    text-align: center;
+    padding: 20px;
+    background-color: var(--primary-color);
+    border-radius: 8px;
+    color: white;
+}
+
+.metric-value {
+    font-size: 36px;
+    font-weight: bold;
+    display: block;
+}
+
+.metric-label {
+    font-size: 16px;
+    opacity: 0.8;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table th, table td {
+    padding: 10px;
+    border: 1px solid var(--input-border);
+    text-align: left;
+}
+
+table th {
+    background-color: var(--secondary-color);
+    font-weight: bold;
+}

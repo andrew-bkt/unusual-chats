@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unusual Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/styles.css">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+        .dashboard-item {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            padding: 15px;
+        }
+        .dashboard-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .dashboard-item-content {
+            display: flex;
+            gap: 20px;
+        }
+        .api-response, .component-container {
+            flex: 1;
+        }
+        .chat-window {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="background-design"></div>
+    <div class="app-container">
+        <header>
+            <h1>Unusual Dashboard</h1>
+            <div class="header-buttons">
+                <button id="go-to-chat" class="chat-button">Back to Chat</button>
+                <button id="go-to-tools" class="tools-button">Tools</button>
+            </div>
+        </header>
+        <main>
+            <div id="dashboard-items"></div>
+        </main>
+    </div>
+    <script src="/static/dashboard.js"></script>
+</body>
+</html>
