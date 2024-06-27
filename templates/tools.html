@@ -3,18 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tool Management</title>
+    <title>AI Assistant Tools</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/static/styles.css">
 </head>
 <body>
-    <div class="tools-container">
-        <h1>Tool Management</h1>
-        <div id="tool-list">
-            <!-- Tool items will be dynamically added here -->
-        </div>
-        <button id="add-new-tool">Add New Tool</button>
-        <a href="/" class="nav-button">Back to Chat</a>
+    <div class="background-design"></div>
+    <div class="app-container">
+        <header>
+            <h1>AI Assistant Tools</h1>
+            <div class="header-buttons">
+                <button id="go-to-chat" class="chat-button">Back to Chat</button>
+            </div>
+        </header>
+        <main>
+            <div class="tools-container">
+                <div id="tool-list"></div>
+                <button id="add-new-tool" class="add-tool-button">Add New Tool</button>
+            </div>
+            <div class="tool-editor-container">
+                <h2>Tool Editor</h2>
+                <div id="tool-editor"></div>
+            </div>
+        </main>
     </div>
-    <script src="/static/tools.js?v=1"></script>
+    <script src="/static/tools.js"></script>
 </body>
 </html>

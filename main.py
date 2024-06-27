@@ -50,6 +50,9 @@ async def chat_page(request: Request):
 async def tools_page(request: Request):
     return templates.TemplateResponse("tools.html", {"request": request})
 
+
+
+
 @app.post("/chat")
 async def chat(request: Request, message: str = Form(...)):
     logging.info(f"Received chat message: {message}")
@@ -143,6 +146,42 @@ async def chat(request: Request, message: str = Form(...)):
     except Exception as e:
         logging.error(f"Error in chat endpoint: {str(e)}")
         raise AppException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="An error occurred during the chat process.")
+
+
+@app.get("/api/tools")
+async def get_tools():
+    try:
+        tools = tool_manager.get_all_tools()
+        return JSONResponse(content={name: tool.__class__.__name__ for name, tool in tools.items()})
+    except Exception as e:
+        logging.error(f"Error getting tools: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/api/tools/{tool_name}")
+async def get_tool(tool_name: str):
+    tool_code = tool_manager.get_tool_code(tool_name)
+    if tool_code is None:
+        raise HTTPException(status_code=404, detail="Tool not found")
+    return JSONResponse(content={"name": tool_name, "code": tool_code})
+
+@app.put("/api/tools/{tool_name}")
+async def update_tool(tool_name: str, code: str = Form(...)):
+    try:
+        tool_manager.update_tool(tool_name, code)
+        return JSONResponse(content={"message": "Tool updated successfully"})
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+@app.post("/api/tools")
+async def create_tool(name: str = Form(...), code: str = Form(...)):
+    try:
+        tool_manager.create_tool(name, code)
+        return JSONResponse(content={"message": "Tool created successfully"})
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+
+
 
 @app.get("/api/response/{response_id}")
 async def get_api_response(response_id: str):

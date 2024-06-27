@@ -113,5 +113,4 @@ class ToolManager:
         ]
 
     def get_all_tools(self):
-        logger.info(f"Returning all tools: {list(self.tools.keys())}")
         return self.tools
