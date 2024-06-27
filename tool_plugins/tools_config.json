@@ -1,5 +1,5 @@
 {
     "get_option_contract_historic": {"enabled": true},
     "get_option_contracts": {"enabled": true},
-    "display_option_contracts": {"enabled": true}
+    "options_screener": {"enabled": true }
 }

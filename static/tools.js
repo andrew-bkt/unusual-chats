@@ -15,23 +15,37 @@ document.addEventListener('DOMContentLoaded', () => {
     async function loadTools() {
         try {
             const response = await fetch('/api/tools');
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
             const tools = await response.json();
+            console.log('Loaded tools:', tools);  // Log the loaded tools
             toolList.innerHTML = '';
-            Object.entries(tools).forEach(([name, className]) => {
-                toolList.appendChild(createToolItem({name, className}));
-            });
+            if (Object.keys(tools).length === 0) {
+                console.log('No tools found');
+                toolList.innerHTML = '<p>No tools available</p>';
+            } else {
+                Object.entries(tools).forEach(([name, className]) => {
+                    toolList.appendChild(createToolItem({name, className}));
+                });
+            }
         } catch (error) {
             console.error('Error loading tools:', error);
+            toolList.innerHTML = '<p>Error loading tools</p>';
         }
     }
 
     async function loadToolCode(toolName) {
         try {
             const response = await fetch(`/api/tools/${toolName}`);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
             const data = await response.json();
             displayToolEditor(toolName, data.code);
         } catch (error) {
             console.error('Error fetching tool code:', error);
+            toolEditor.innerHTML = '<p>Error loading tool code</p>';
         }
     }
 
@@ -68,7 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 alert('Tool updated successfully');
                 loadTools();
             } else {
-                alert('Failed to update tool');
+                throw new Error(`HTTP error! status: ${response.status}`);
             }
         } catch (error) {
             console.error('Error updating tool:', error);
@@ -113,7 +127,7 @@ class ${name}(BaseTool):
                     alert('New tool created successfully');
                     loadTools();
                 } else {
-                    alert('Failed to create new tool');
+                    throw new Error(`HTTP error! status: ${response.status}`);
                 }
             } catch (error) {
                 console.error('Error creating new tool:', error);

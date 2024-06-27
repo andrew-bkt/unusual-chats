@@ -25,16 +25,20 @@ class ToolManager:
 
     def load_tools(self):
         logger.info(f"Loading tools from {self.plugin_dir}")
-        with open(self.config_file, 'r') as f:
-            config = json.load(f)
-        logger.info(f"Loaded config: {config}")
+        try:
+            with open(self.config_file, 'r') as f:
+                config = json.load(f)
+            logger.info(f"Loaded config: {config}")
+        except FileNotFoundError:
+            logger.warning(f"Config file not found: {self.config_file}")
+            config = {}
 
         for filename in os.listdir(self.plugin_dir):
             if filename.endswith('.py') and filename != 'base_tool.py':
                 module_name = filename[:-3]
                 logger.info(f"Found potential tool: {module_name}")
                 if module_name in config and config[module_name].get('enabled', True):
-                    logger.info(f"Loading tool: {module_name}")
+                    logger.info(f"Attempting to load tool: {module_name}")
                     try:
                         module = importlib.import_module(module_name)
                         for item_name in dir(module):
@@ -47,7 +51,7 @@ class ToolManager:
                 else:
                     logger.info(f"Tool {module_name} is disabled or not in config")
 
-        logger.info(f"Loaded tools: {list(self.tools.keys())}")
+    logger.info(f"Loaded tools: {list(self.tools.keys())}")
 
 
     def get_tool(self, name):

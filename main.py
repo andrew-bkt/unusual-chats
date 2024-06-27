@@ -152,9 +152,10 @@ async def chat(request: Request, message: str = Form(...)):
 async def get_tools():
     try:
         tools = tool_manager.get_all_tools()
+        logger.info(f"Retrieved tools: {list(tools.keys())}")
         return JSONResponse(content={name: tool.__class__.__name__ for name, tool in tools.items()})
     except Exception as e:
-        logging.error(f"Error getting tools: {str(e)}")
+        logger.error(f"Error getting tools: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
 
 @app.get("/api/tools/{tool_name}")
