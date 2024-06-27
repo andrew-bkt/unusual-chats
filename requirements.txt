@@ -1,6 +1,9 @@
-fastapi
-uvicorn
-jinja2
-pydantic
-openai
-requests
+fastapi==0.68.0
+uvicorn==0.15.0
+jinja2==3.0.1
+python-dotenv==0.19.0
+aiohttp==3.7.4
+python-multipart==0.0.5
+itsdangerous==2.0.1
+openai==0.27.0
+requests==2.26.0
