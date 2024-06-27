@@ -126,12 +126,15 @@ async def chat(request: Request, message: str = Form(...)):
                         
                         submit_tool_outputs(thread_id, run.id, tool_outputs)
                         logging.info(f"Submitted tool outputs for run {run.id}")
+                    
                     else:
                         logging.error(f"Unexpected required action: {required_action}")
                         yield f"data: {json.dumps({'type': 'error', 'content': 'An unexpected action is required. Please try again.'})}\n\n"
                         break
                 elif run.status in ["failed", "expired", "cancelled"]:
                     error_message = f"Run failed with status: {run.status}"
+                    if hasattr(run, 'last_error'):
+                        error_message += f", Error: {run.last_error}"
                     logging.error(error_message)
                     yield f"data: {json.dumps({'type': 'error', 'content': error_message})}\n\n"
                     break
@@ -141,6 +144,7 @@ async def chat(request: Request, message: str = Form(...)):
                     logging.error(f"Unexpected run status: {run.status}")
                     yield f"data: {json.dumps({'type': 'error', 'content': 'An unexpected error occurred. Please try again.'})}\n\n"
                     break
+
 
         return StreamingResponse(event_generator(), media_type="text/event-stream")
     except Exception as e:

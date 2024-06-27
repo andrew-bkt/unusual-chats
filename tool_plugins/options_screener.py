@@ -1,5 +1,5 @@
 import requests
-from .base_tool import BaseTool
+from tool_plugins.base_tool import BaseTool
 
 class OptionsScreener(BaseTool):
     def execute(self, api_key: str, **kwargs):
@@ -11,7 +11,15 @@ class OptionsScreener(BaseTool):
         # Filter out None values from kwargs
         params = {k: v for k, v in kwargs.items() if v is not None}
         
-        response = requests.get(url, headers=headers, params=params)
+        try:
+            response = requests.get(url, headers=headers, params=params)
+            response.raise_for_status()  # This will raise an HTTPError for bad responses
+            return response.json()
+        except requests.RequestException as e:
+            error_message = f"Failed to fetch data: {str(e)}"
+            logging.error(error_message)
+            return {"error": error_message}
+
 
         if response.status_code == 200:
             return response.json()

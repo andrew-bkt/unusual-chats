@@ -1,5 +1,11 @@
 {
-    "get_option_contract_historic": {"enabled": true},
-    "get_option_contracts": {"enabled": true},
-    "options_screener": {"enabled": true }
-}
+    "get_option_contracts": {
+      "enabled": true
+    },
+    "get_option_contract_historic": {
+      "enabled": true
+    },
+    "options_screener": {
+      "enabled": true
+    }
+  }
