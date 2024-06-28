@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
             </div>
             <div class="chat-window" style="display: none;">
-                <textarea placeholder="Describe the component you want..."></textarea>
+                <textarea placeholder="Describe the component you want...">${item.description || ''}</textarea>
                 <button class="generate-btn">Generate Component</button>
             </div>
         `;
@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
         generateBtn.addEventListener('click', () => generateComponent(item, index));
 
         if (item.description) {
-            generateComponent(item, index);
+            generateComponent(item, index, item.description);
         }
 
         dashboardItems.appendChild(itemElement);
